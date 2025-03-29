@@ -1,0 +1,478 @@
+/* === APP-SPECIFIC & COMPONENT STYLES === */
+
+/* --- Main Layout --- */
+main {
+  padding-top: var(--spacing-4);    /* Use spacing variables */
+  padding-bottom: var(--spacing-5);
+  /* Approx Navbar height (padding + font size + border) ~60-70px */
+  /* Adjust 70px based on actual navbar height inspection if needed */
+  min-height: calc(100vh - 70px - var(--spacing-4) - var(--spacing-5));
+  background-color: var(--body-bg); /* Ensure main area uses body background */
+}
+
+
+/* --- Navbar Styles --- */
+.navbar {
+  background-color: var(--dark-color);
+  color: #fff;
+  padding: var(--spacing-2) 0; /* Reduced top/bottom padding slightly */
+  box-shadow: var(--box-shadow-sm);
+  position: sticky; /* Keep navbar visible on scroll */
+  top: 0;
+  z-index: 1020; /* Standard sticky header z-index */
+  border-bottom: 3px solid var(--primary-color); /* Primary color accent */
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  color: #fff;
+  text-decoration: none;
+  font-size: calc(var(--font-size-lg) * 1.1); /* Slightly larger brand */
+  font-weight: 600;
+  transition: var(--transition-base);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) 0; /* Add vertical padding */
+}
+.navbar-brand:hover {
+    color: #e9ecef;
+    text-decoration: none;
+}
+.navbar-brand .brand-icon {
+    font-size: 1.7rem; /* Adjust icon size if needed */
+    line-height: 1;
+    /* Optional: Add subtle animation */
+    /* transition: transform 0.3s ease-in-out; */
+}
+/* .navbar-brand:hover .brand-icon { transform: rotate(10deg); } */
+
+.navbar-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center; /* Vertically center list items */
+}
+
+.navbar-links li {
+  margin-left: var(--spacing-3);
+}
+.navbar-links li:first-child {
+    margin-left: 0;
+}
+
+/* Style for NavLink component and buttons styled as nav-links */
+.nav-link {
+  color: rgba(255, 255, 255, 0.85); /* Slightly brighter default */
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  /* Adjust padding for better spacing and touch target */
+  padding: var(--spacing-2) var(--spacing-3);
+  transition: var(--transition-base);
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: var(--border-radius-sm); /* Slight rounding on links too */
+  line-height: 1.4; /* Adjust line height */
+}
+ /* Hover state for links/buttons */
+ .nav-link:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+  text-decoration: none;
+ }
+ /* Active state using NavLink's 'active' class */
+ .nav-link.active {
+  color: #fff;
+  font-weight: 600; /* Bolder active link */
+  background-color: rgba(var(--bs-primary-rgb, 0, 82, 155), 0.3); /* Use primary color with alpha */
+  /* Or keep underline approach: */
+  /* border-bottom: 2px solid var(--primary-color); */
+  /* padding-bottom: calc(var(--spacing-2) - 2px); */
+ }
+
+ /* User info text styling */
+ .user-info {
+     margin-right: var(--spacing-2);
+     color: rgba(255, 255, 255, 0.75); /* Slightly brighter muted color */
+     font-size: var(--font-size-sm);
+     font-style: normal;
+     display: inline-block;
+     vertical-align: middle;
+     padding: var(--spacing-2) var(--spacing-3); /* Match link padding */
+     white-space: nowrap; /* Prevent wrapping */
+     max-width: 200px; /* Prevent extremely long names/emails */
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
+  .user-info.loading-indicator {
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.6);
+  }
+
+/* --- Destination Card Styles --- */
+.destination-card {
+  background-color: var(--card-bg);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius); /* Back to default radius */
+  box-shadow: var(--box-shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-base);
+  height: 100%;
+}
+/* Refined hover */
+ .destination-card:hover {
+    transform: translateY(-4px); /* Consistent lift */
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1); /* Slightly softer hover shadow */
+ }
+ /* Style for cards when deadline has passed */
+ .destination-card.deadline-passed {
+    opacity: 0.8; /* Slightly dim */
+    /* Optionally add grayscale filter: filter: grayscale(50%); */
+ }
+ .destination-card.deadline-passed:hover {
+     transform: none; /* Disable lift on hover if deadline passed */
+     box-shadow: var(--box-shadow-sm); /* Keep base shadow */
+ }
+
+
+.destination-card .card-img-top {
+  width: 100%;
+  height: 200px; /* Back to 200px */
+  overflow: hidden;
+  background-color: #f1f3f5; /* Slightly darker placeholder bg */
+  position: relative; /* Position for placeholder absolutely if needed */
+}
+.destination-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, filter 0.3s ease; /* Add filter transition */
+}
+/* Keep subtle zoom on hover, but maybe less */
+.destination-card:not(.deadline-passed):hover img {
+  transform: scale(1.02);
+  /* Optional: Slightly desaturate non-hovered images */
+  /* filter: saturate(1.1); */
+}
+/* Placeholder styling */
+.destination-card .img-placeholder {
+  position: absolute; /* Position over the container */
+  top: 0; left: 0; right: 0; bottom: 0; /* Fill container */
+  display: flex; /* Keep flex for centering */
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f3f5;
+  color: #adb5bd; /* Lighter grey text */
+  font-size: var(--font-size-sm);
+  text-align: center;
+  /* Remove border, background handled by container */
+  /* border-bottom: var(--border-width) solid var(--border-color); */
+  z-index: 1; /* Ensure it's above potential broken image artifacts */
+}
+/* Hide placeholder if image loads successfully (JS should handle this with display:none) */
+/* Or use CSS sibling selector if structure allows */
+/* .destination-card img + .img-placeholder { display: none; } */
+
+
+.destination-card-content {
+  padding: var(--spacing-4);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.destination-card-content h3 {
+  margin-bottom: var(--spacing-1);
+  color: var(--primary-color);
+  font-size: 1.3rem; /* Adjust title size */
+  font-weight: 600;
+}
+
+.destination-card-content .location {
+  font-size: var(--font-size-sm);
+  color: var(--secondary-color);
+  margin-bottom: var(--spacing-2);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.destination-card-content .cost {
+    font-weight: 600;
+    color: #333; /* Darker color for total cost */
+    margin-bottom: var(--spacing-1); /* Less space below total cost */
+    font-size: 1rem;
+    display: block;
+}
+/* Cost per person styling */
+.destination-card-content .cost-per-person {
+  font-size: var(--font-size-sm);
+  color: var(--success-color); /* Use success color */
+  margin-bottom: var(--spacing-3);
+  font-weight: 500;
+}
+.destination-card-content .cost-per-person:not(:empty)::before {
+    content: '≈ '; /* Add approx symbol */
+}
+
+/* Deadline info styling */
+.destination-card-content .deadline-info {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-bottom: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius-sm);
+  display: inline-block; /* Make it inline */
+  line-height: 1.3;
+  margin-top: calc(-1 * var(--spacing-1)); /* Pull up slightly if needed */
+}
+.deadline-info.text-danger {
+   color: #842029; /* Darker red text */
+   background-color: #f8d7da;
+}
+.deadline-info.text-success {
+   color: #0f5132; /* Darker green text */
+   background-color: #d1e7dd;
+}
+
+
+ .destination-card-content .description {
+    color: #495057; /* Slightly lighter than pure dark */
+    margin-bottom: var(--spacing-4);
+    flex-grow: 1;
+    font-size: 0.95rem; /* Slightly smaller description */
+    line-height: 1.6;
+ }
+
+/* Card actions footer */
+.destination-card-actions {
+  margin-top: auto;
+  border-top: var(--border-width) solid var(--border-color);
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: #f8f9fa; /* Use light color */
+}
+ .destination-card-actions .vote-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+ .destination-card-actions .vote-count {
+    font-weight: 500;
+    font-size: var(--font-size-base);
+    color: var(--secondary-color);
+ }
+ .destination-card-actions .voted-badge {
+     display: inline-flex;
+     align-items: center;
+     gap: var(--spacing-1);
+     background-color: var(--success-color);
+     color: white;
+     padding: var(--spacing-1) var(--spacing-2);
+     border-radius: var(--border-radius-sm);
+     font-size: var(--font-size-sm);
+     font-weight: 500;
+     margin-left: var(--spacing-2);
+ }
+  .destination-card-actions .btn {
+      padding: var(--spacing-1) var(--spacing-3);
+      font-size: var(--font-size-sm);
+  }
+  .destination-card-actions .login-prompt {
+      font-size: var(--font-size-sm);
+      color: var(--secondary-color);
+      text-align: right;
+      flex-grow: 1;
+  }
+
+
+/* --- Login / Admin Form Container Styles --- */
+.form-container {
+  max-width: 550px;
+  margin: var(--spacing-5) auto;
+  padding: var(--spacing-4) var(--spacing-5); /* Adjust padding */
+  background: var(--card-bg);
+  border-radius: var(--border-radius); /* Back to default radius */
+  box-shadow: var(--box-shadow-sm); /* Use subtle shadow */
+  border: var(--border-width) solid var(--border-color);
+}
+
+.form-container h1, .form-container h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-4);
+    font-weight: 600; /* Bolder form titles */
+}
+ .form-container .form-text {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-color);
+ }
+ /* Style required field indicators */
+ .form-group label::after {
+     /* content: ' *'; Commented out, use text in label instead */
+     /* color: var(--danger-color); */
+     /* font-weight: bold; */
+ }
+
+/* --- Admin Dashboard Table --- */
+.admin-table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: var(--spacing-4);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    -webkit-overflow-scrolling: touch;
+}
+.admin-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    background: var(--card-bg);
+}
+
+.admin-table thead {
+    background-color: var(--light-color); /* Use light background for header */
+    color: var(--dark-color); /* Dark text */
+    border-bottom: 2px solid var(--border-color); /* Regular border */
+}
+
+.admin-table th,
+.admin-table td {
+    padding: var(--spacing-3);
+    border: none;
+    border-bottom: var(--border-width) solid var(--border-color);
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.admin-table th {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--secondary-color); /* Grey header text */
+    text-transform: uppercase; /* Uppercase headers */
+    font-size: var(--font-size-sm);
+}
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Cell wrapping */
+ .admin-table .description-cell,
+ .admin-table .name-cell,
+ .admin-table .location-cell {
+    white-space: normal;
+    min-width: 150px;
+    vertical-align: top; /* Align top for long text */
+ }
+ .admin-table .description-cell { min-width: 250px; line-height: 1.4; }
+
+/* Row styles */
+.admin-table tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+.admin-table tbody tr:nth-child(even) {
+     /* background-color: #fdfdfd; Remove zebra striping for cleaner look */
+}
+.admin-table tbody tr:hover {
+    background-color: var(--primary-color-lighter); /* Keep hover */
+}
+
+/* Actions Cell */
+ .admin-table .actions-cell {
+    white-space: nowrap;
+    text-align: right;
+ }
+ .admin-table .actions-cell .btn {
+    margin-left: var(--spacing-1);
+    margin-right: 0;
+ }
+
+/* Other Cell Alignments */
+ .admin-table .cost-cell {
+     text-align: right;
+     white-space: nowrap;
+     font-family: var(--font-family-sans-serif); /* Use standard font */
+     font-weight: 500; /* Slightly bolder cost */
+ }
+ .admin-table .image-cell {
+     max-width: 200px;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
+ .admin-table .image-cell a {
+     white-space: nowrap;
+     display: block;
+     color: var(--secondary-color); /* Muted link color */
+     font-size: var(--font-size-sm);
+ }
+  .admin-table .image-cell a:hover {
+      color: var(--primary-color);
+  }
+
+/* Style for the map button */
+.map-link-btn {
+  display: inline-block; /* Make it behave like a button */
+  width: auto; /* Don't force full width */
+  text-align: center;
+}
+
+/* Add btn-outline-secondary if not already defined in index.css */
+.btn-outline-secondary {
+color: var(--secondary-color);
+border-color: var(--secondary-color);
+}
+.btn-outline-secondary:hover {
+color: #fff;
+background-color: var(--secondary-color);
+border-color: var(--secondary-color);
+}
+
+/* Ensure location icon (if used) aligns */
+.destination-card-content .location i {
+  margin-right: var(--spacing-1);
+  color: var(--secondary-color); /* Match text color */
+}
+
+
+/* --- Not Found Page --- */
+.not-found {
+    text-align: center;
+    margin-top: var(--spacing-5);
+    padding: var(--spacing-5) 0;
+}
+.not-found h1 {
+    color: var(--secondary-color);
+    font-size: clamp(3rem, 10vw, 6rem); /* Responsive font size */
+    font-weight: 300; /* Lighter weight */
+    margin-bottom: var(--spacing-1);
+}
+.not-found p {
+    font-size: var(--font-size-lg);
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-4);
+    max-width: 600px; /* Limit text width */
+    margin-left: auto;
+    margin-right: auto;
+}
+.not-found .btn {
+    font-size: var(--font-size-base); /* Back to base size */
+    padding: var(--spacing-3) var(--spacing-4); /* Adjust padding */
+}
+
+/* --- Helper Classes (Add to index.css if preferred) --- */
+.text-danger { color: var(--danger-color) !important; }
+.text-success { color: var(--success-color) !important; }
+/* ... add other text color utilities if needed ... */
+
+.h-100 { height: 100% !important; }
